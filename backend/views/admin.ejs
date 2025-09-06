@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/admin.css" />
+</head>
+<body>
+  <h2>Admin Dashboard</h2>
+
+  <% if (orders.length === 0) { %>
+    <p>No orders yet.</p>
+  <% } else { %>
+    <% orders.forEach((order, index) => { %>
+      <div class="order-box">
+        <h3>Order <%= index + 1 %></h3>
+
+        <% if (order.customer && typeof order.customer === 'object') { %>
+          <p><strong>Name:</strong> <%= order.customer.name || "N/A" %></p>
+          <p><strong>Student ID:</strong> <%= order.customer.studentid || "N/A" %></p>
+          <p><strong>Contact:</strong> <%= order.customer.contact || "N/A" %></p>
+          <p><strong>Email:</strong> <%= order.customer.email || "N/A" %></p>
+        <% } else { %>
+          <p><em>Customer details not available</em></p>
+        <% } %>
+
+        <% if (order.cart && typeof order.cart === 'object') { %>
+          <ul>
+            <% for (let item in order.cart) { %>
+              <li>
+                <%= item %> × <%= order.cart[item].quantity %> = ₹<%= order.cart[item].quantity * order.cart[item].price %>
+              </li>
+            <% } %>
+          </ul>
+        <% } else { %>
+          <p><em>Cart details not available</em></p>
+        <% } %>
+
+        <p><strong>Total:</strong> ₹<%= order.total || 0 %></p>
+      </div>
+    <% }) %>
+  <% } %>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Scan to Pay</title>
+  <link rel="stylesheet" href="/scan.css" />
+</head>
+<body>
+  <div class="scanner-box">
+     <h2>Please enter your details to confirm the order</h2>
+    <form id="customer-form">
+      <input type="text" id="name" placeholder="Name" required />
+      <input type="text" id="studentid" placeholder="Student ID" required />
+      <input type="text" id="contact" placeholder="Contact No." required />
+      <input type="email" id="email" placeholder="Email ID" required />
+      <img src="/images/qr_image.png" alt="QR Code" />
+      <br>
+      <button type="submit">Click to place order after payment</button>
+    </form>
+  </div>
+
+  <div id="order-data"
+     data-cart='<%= JSON.stringify(cart) %>'
+     data-total="<%= total %>">
+</div>
+
+  <script>
+  const orderData = document.getElementById("order-data");
+  const cart = JSON.parse(orderData.dataset.cart);
+  const total = parseInt(orderData.dataset.total);
+
+  document.getElementById("customer-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const customer = {
+      name: document.getElementById("name").value,
+      studentid: document.getElementById("studentid").value,
+      contact: document.getElementById("contact").value,
+      email: document.getElementById("email").value
+    };
+
+    const response = await fetch("/save-order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ customer, cart, total })
+    });
+
+    if (response.ok) {
+      alert("✅ Order confirmed! Thank you.");
+      window.location.href = "/";
+    } else {
+      alert("❌ Something went wrong. Please try again.");
+    }
+  });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rocket Chai Website</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Trirong:ital,wght@0,400;0,500;0,600;0,700;0,800;1,100;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="outerdiv">
+   
+   <div class="innerouterdiv">
+     <div class="innerdiv">
+        <h1>Welcome to <span>ROCKET CHAI</span> !!! </h1>
+        <h4>Built for foodies who move fast and eat bold.</h4>
+        <div class="contentfixer">
+        <div class="outercontent">
+          <div class="menu">
+            <div class="item-card" data-price="120">
+                <img src="./images/burger image.png" alt="Burger" />
+                <h3>Burger</h3>
+                <p>₹120</p>
+                <button class="item-btn" >Add to Cart</button>
+            </div>
+            <div class="item-card" data-price="200">
+                <img src="./images/pizzaimage.jpeg" alt="Pizza" />
+
+                <h3>Pizza</h3>
+                <p>₹200</p>
+                <button  class="item-btn" >Add to Cart</button>
+            </div>
+            <div class="item-card" data-price="60">
+                <img src="./images/coconut water.jpeg" alt="Coconut Water" />
+                <h3>Coconut Water</h3>
+                <p>₹60</p>
+                <button class="item-btn" >Add to Cart</button>
+            </div>
+           <div class="item-card" data-price="120">
+                <img src="./images/burger image.png" alt="Burger" />
+                <h3>Burger</h3>
+                <p>₹120</p>
+                <button class="item-btn" >Add to Cart</button>
+            </div>
+             <div class="item-card" data-price="120">
+                <img src="./images/burger image.png" alt="Burger" />
+                <h3>Burger</h3>
+                <p>₹120</p>
+                <button class="item-btn" >Add to Cart</button>  
+            </div>
+          </div>
+
+          <div class="cart-summary">
+            <img class="scroll" src="./images/scrolling.png" alt="SCROLL IT UP FOR BILL DETAILS">
+           
+            <h3>🛒 Cart Summary</h3>
+            <p>Items: <span id="item-count">0</span></p>
+             <div class="cart-details">
+              <ul id="cart-list"></ul>
+
+            <p>Your Total Payment Is : ₹ <span id="total-price">0</span></p>
+            <button id="scan-btn" class="scanner-btn">
+                  <img class="scan-image-icon" src="./images/scan_image.png">
+              <p>CLICK HERE FOR PAYMENT</p> 
+            </button>
+          </div>
+        </div>
+    </div>
+    </div>
+   </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

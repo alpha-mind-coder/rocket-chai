@@ -1,0 +1,90 @@
+/* Reset and base styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Trirong', serif;
+  background-image: url("./images/rocket_chai_web_image.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Scanner container */
+.scanner-box {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  position: relative;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: #f17154;
+  color: white;
+  border: none;
+  font-size: 20px;
+  padding: 6px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.close-btn:hover {
+  background-color: #d85a3e;
+}
+
+/* QR image */
+.scanner-box img {
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+/* UPI text */
+.scanner-box p {
+  font-size: 16px;
+  color: #333;
+  margin-top: 10px;
+}
+
+.scanner-box h2 {
+  font-size: 22px;
+  color: #222;
+  margin-bottom: 10px;
+}
+input {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  background-color: #f17154;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #d85a3e;
+}

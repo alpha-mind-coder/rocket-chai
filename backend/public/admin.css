@@ -1,0 +1,14 @@
+body {
+  font-family: 'Trirong', serif;
+  background-color: #fff8f4;
+  padding: 20px;
+}
+
+.order-box {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}

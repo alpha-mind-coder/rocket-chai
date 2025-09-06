@@ -1,0 +1,229 @@
+  *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  body{
+    height: 100vh;
+    width: 100vw;
+    background-color:/* #ece8e0*/antiquewhite;
+  }
+
+  .innerouterdiv{
+    display: flex;
+    flex-direction: column;
+     width: 100%;
+      height: 100%;
+      align-items: center; 
+    text-align: center; 
+  }
+  
+span{
+    font-family: "Trirong", serif;
+    font-weight: 900;
+    font-style: italic;
+    color: rgb(241, 113, 84);
+}
+.menu {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.item-card {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  width: 180px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+   margin: 20px;
+}
+
+.item-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(241, 113, 84, 0.6);
+}
+
+.item-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.item-card button {
+  margin-top: 10px;
+  background-color: rgb(241, 113, 84);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.5s;
+
+  display: inline-block;
+  position: relative;
+}
+.item-card {
+  flex: 1 1 160px;
+  min-width: 160px;
+  max-width: 220px;
+}
+@media (max-width: 577px) {
+  .item-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .menu {
+    justify-content: center;
+  }
+}
+
+.item-btn.clicked {
+  padding-right: 26px;
+}
+
+.item-btn::after {
+  content: '  ✔';
+  position: absolute;
+  top: 50%;
+  right: -18px;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: 0.5s ease;
+}
+
+.item-btn.clicked::after {
+  opacity: 1;
+  right: 10px;
+}
+ .outerdiv {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  background-image: url("./images/rocket_chai_web_image.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.outerdiv::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.2));
+  /* z-index: 1; */
+}
+
+
+.innerdiv {
+  flex: 1;
+  width: 100%;
+  max-width: 900px;
+  padding: 20px;
+  /* background-color: rgba(0, 0, 0, 0.2); */
+  /* backdrop-filter: blur(6px); */
+  border-radius: 12px;
+  overflow-y: auto;
+  color: white;
+  z-index: 2;
+  padding-bottom: 10px;
+}
+
+.cart-summary {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(6px);
+  color: #140808;
+  padding: 2px;
+  text-align: center;
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.3);
+  z-index: 3;
+  transition: height 0.3s ease;
+  overflow: hidden;
+
+}
+.contentfixer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  /* padding: 20px; */
+  margin: 40px;
+  
+}
+/* .outercontent{
+flex-wrap: wrap;
+} */
+.cart-details {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.cart-summary:hover .cart-details {
+  max-height: 300px;
+  font-family: "Trirong", serif;
+  font-weight: bolder;
+  font-style: italic;
+  color: black;
+}
+.scroll{
+  height: 40px;
+}
+.scanner-btn {
+  margin-top: 10px;
+  background-color: #e88455;
+  color: #000;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.scanner-btn:hover {
+  background-color: #ff7d45;
+  
+}
+
+.scanner-section {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  z-index: 4;
+  text-align: center;
+}
+
+.scanner-section img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  margin-top: 10px;
+}
+.scan-image-icon{
+  height: 50px;
+}
