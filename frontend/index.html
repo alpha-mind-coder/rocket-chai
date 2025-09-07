@@ -71,6 +71,19 @@
     </div>
    </div>
   </div>
+  <script src="/flash.js"></script>
+  <script>
+  if (window.flashMessage) {
+    const div = document.createElement("div");
+    div.className = "flash-message";
+    div.textContent = window.flashMessage;
+    document.body.prepend(div);
+     setTimeout(() => {
+      div.remove();
+    }, 3000);
+
+  }
+</script>
 
   <script src="./app.js"></script>
 </body>

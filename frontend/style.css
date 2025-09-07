@@ -227,3 +227,15 @@ flex-wrap: wrap;
 .scan-image-icon{
   height: 50px;
 }
+.flash-message {
+  background-color: #8dff02;
+  color: #040301;
+  padding: 12px 20px;
+  /* margin-top: 1px; */
+  border: 1px solid #ffeeba;
+  border-radius: 5px;
+  width: 100%;
+  font-weight: 900;
+  font-size: larger;
+  text-align: center;
+}
