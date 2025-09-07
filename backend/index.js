@@ -1,98 +1,86 @@
 const express = require("express");
 const path = require("path");
+const { createClient } = require('@supabase/supabase-js');
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const session = require("express-session");
-const mysql = require("mysql2");
 
 const app = express();
 
-// ✅ Connect to MySQL
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME
-});
+// ✅ Supabase client
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_API_KEY);
 
-db.connect(err => {
-  if (err) throw err;
-  console.log("✅ Connected to MySQL");
-});
-
-// ✅ Set up EJS for dynamic rendering
+// ✅ EJS setup
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// ✅ Serve static frontend and public assets
+// ✅ Static assets
 app.use(express.static(path.join(__dirname, "../frontend")));
 app.use(express.static(path.join(__dirname, "public")));
 
-// ✅ Enable JSON parsing
+// ✅ JSON parsing
 app.use(express.json());
 
-// ✅ Initialize session middleware BEFORE routes
+// ✅ Session middleware
 app.use(session({
   secret: "rocket-secret",
   resave: false,
   saveUninitialized: true
 }));
 
-// ✅ Debug session state
+// ✅ Debug session
 app.use((req, res, next) => {
   console.log("Session state:", req.session);
   next();
 });
 
-// ✅ Homepage route
+// ✅ Homepage
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
-// ✅ Scan page route — shows QR + form
+// ✅ Scan page
 app.get("/scan", (req, res) => {
   const cart = req.session.cart || {};
   const total = req.session.total || 0;
+   const hasItems = Object.keys(cart).length > 0;
+
+  if (!hasItems || total <= 0) {
+     req.session.flash = "🛒 Please choose your items before scanning to pay.";
+
+    return res.redirect("/"); // or show a message page if you prefer
+  }
+
   res.render("scan", { cart, total });
 });
+app.get("/flash.js", (req, res) => {
+  const message = req.session.flash || "";
+  delete req.session.flash;
+  res.type("application/javascript").send(`window.flashMessage = "${message}";`);
+});
 
-// ✅ Save cart before redirecting to /scan
+// ✅ Save cart
 app.post("/save-cart", (req, res) => {
   req.session.cart = req.body.cart;
   req.session.total = req.body.total;
   res.sendStatus(200);
 });
 
-// ✅ Save confirmed order to MySQL
-app.post("/save-order", (req, res) => {
-  const { customer, cart, total } = req.body;
+// ✅ Submit order to Supabase
+app.post("/submit-order", async (req, res) => {
+  const { name, student_id, phone, email, item, quantity } = req.body;
+  const { data, error } = await supabase
+    .from("orders")
+    .insert([{ name, student_id, phone, email, item, quantity }]);
 
-  if (!customer || typeof customer !== "object") {
-    console.warn("❌ Invalid customer data:", customer);
-    return res.status(400).send("Invalid customer info");
+  if (error) {
+    console.error("❌ Supabase insert error:", error.message);
+    return res.status(500).send("Error saving order");
   }
 
-  const query = `
-    INSERT INTO orders (name, studentid, contact, email, cart, total)
-    VALUES (?, ?, ?, ?, ?, ?)
-  `;
-  const values = [
-    customer.name || "N/A",
-    customer.studentid || "N/A",
-    customer.contact || "N/A",
-    customer.email || "N/A",
-    JSON.stringify(cart || {}),
-    total || 0
-  ];
-
-  db.query(query, values, (err) => {
-    if (err) {
-      console.error("❌ Failed to save order:", err);
-      return res.sendStatus(500);
-    }
-    res.sendStatus(200);
-  });
+  res.status(200).send("Order saved!");
 });
-// ✅ Secure admin login with password
+
+// ✅ Admin login
 app.get("/login-admin", (req, res) => {
   const { code } = req.query;
   if (code === process.env.ADMIN_PASS) {
@@ -105,34 +93,18 @@ app.get("/login-admin", (req, res) => {
   }
 });
 
-// ✅ Admin dashboard route
-app.get("/admin", (req, res) => {
+// ✅ Admin dashboard
+app.get("/admin", async (req, res) => {
   if (!req.session.isAdmin) return res.status(403).send("Access denied");
 
-  db.query("SELECT * FROM orders", (err, results) => {
-    if (err) return res.status(500).send("Error fetching orders");
+  const { data, error } = await supabase.from("orders").select("*");
+  console.log("Fetched orders:", data);
+  if (error) {
+    console.error("❌ Supabase fetch error:", error.message);
+    return res.status(500).send("Error fetching orders");
+  }
 
-    const orders = results.map(order => {
-      let customer = {};
-      let cart = {};
-
-      try {
-        customer = JSON.parse(order.customer);
-      } catch (e) {
-        console.warn("⚠️ Failed to parse customer JSON:", e.message);
-      }
-
-      try {
-        cart = JSON.parse(order.cart);
-      } catch (e) {
-        console.warn("⚠️ Failed to parse cart JSON:", e.message);
-      }
-
-      return { ...order, customer, cart };
-    });
-
-    res.render("admin", { orders });
-  });
+  res.render("admin", { orders: data });
 });
 
 // ✅ Start server

@@ -7,6 +7,7 @@
 </head>
 <body>
   <div class="scanner-box">
+    <a href="/" class="close-btn">✖</a>
      <h2>Please enter your details to confirm the order</h2>
     <form id="customer-form">
       <input type="text" id="name" placeholder="Name" required />
@@ -32,17 +33,27 @@
   document.getElementById("customer-form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const customer = {
-      name: document.getElementById("name").value,
-      studentid: document.getElementById("studentid").value,
-      contact: document.getElementById("contact").value,
-      email: document.getElementById("email").value
-    };
+  const customer = {
+  name: document.getElementById("name").value,
+  student_id: document.getElementById("studentid").value,
+  phone: document.getElementById("contact").value,
+  email: document.getElementById("email").value,
+  item: "cart", // optional if you want to pass item name
+  quantity: total // optional if you want to pass quantity
+};
 
-    const response = await fetch("/save-order", {
+    const response = await fetch("/submit-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ customer, cart, total })
+      body: JSON.stringify({ 
+        name: document.getElementById("name").value,
+        student_id: document.getElementById("studentid").value,
+        phone: document.getElementById("contact").value,
+        email: document.getElementById("email").value,
+        item: "cart",
+        quantity: total
+
+       })
     });
 
     if (response.ok) {
