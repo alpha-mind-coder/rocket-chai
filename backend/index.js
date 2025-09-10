@@ -32,6 +32,8 @@ app.use((req, res, next) => {
   console.log("Session state:", req.session);
   next();
 });
+app.get("/healthz", (req, res) => res.send("OK"));
+
 
 // ✅ Homepage
 app.get("/", (req, res) => {

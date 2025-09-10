@@ -2,11 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Scan to Pay</title>
   <link rel="stylesheet" href="/scan.css" />
 </head>
 <body>
   <div class="scanner-box">
+    <div class="scanner-content">
     <a href="/" class="close-btn">✖</a>
      <h2>Please enter your details to confirm the order</h2>
     <form id="customer-form">
@@ -14,10 +17,14 @@
       <input type="text" id="studentid" placeholder="Student ID" required />
       <input type="text" id="contact" placeholder="Contact No." required />
       <input type="email" id="email" placeholder="Email ID" required />
-      <img src="/images/qr_image.png" alt="QR Code" />
+      <div class="img-wrapper">
+        <img class="qr-image" src="/images/qr_image.png" alt="QR Code" />
+      <h3 class="upi-id" >UPI ID: Q564743460@ybl</h3>
+            </div>
       <br>
       <button type="submit">Click to place order after payment</button>
     </form>
+    </div>
   </div>
 
   <div id="order-data"
