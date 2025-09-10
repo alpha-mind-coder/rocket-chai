@@ -1,0 +1,6 @@
+# .vercelignore
+backend/
+routes/
+public/
+node_modules/
+.env
