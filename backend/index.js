@@ -108,7 +108,7 @@ app.get("/admin", async (req, res) => {
 
   res.render("admin", { orders: data });
 });
-
+app.get("/healthz", (req, res) => res.send("OK"));
 // ✅ Start server
 app.listen(3000, () => {
   console.log("🚀 Rocket Chai running at http://localhost:3000");
