@@ -2,6 +2,10 @@ let cart = {};
 let totalPrice = 0;
 let itemCount = 0;
 
+const backendURL = window.location.hostname === "localhost"
+  ? "http://localhost:3000"
+  : "https://rocket-chai-backend.onrender.com";
+
 document.addEventListener("DOMContentLoaded", () => {
   // Handle Add to Cart buttons
   const buttons = document.querySelectorAll(".item-btn");
@@ -23,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
       totalPrice += price;
       updateCartDisplay();
 
-      //  animation
+      // animation
       this.classList.add("clicked");
       setTimeout(() => this.classList.remove("clicked"), 800);
     });
@@ -33,12 +37,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const scanBtn = document.getElementById("scan-btn");
   if (scanBtn) {
     scanBtn.addEventListener("click", () => {
-      fetch("/save-cart", {
+      fetch(`${backendURL}/save-cart`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ cart, total: totalPrice })
       }).then(() => {
-        window.location.href = "/scan";
+        window.location.href = `${backendURL}/scan`;
       });
     });
   }

@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const { createClient } = require('@supabase/supabase-js');
+const cors = require("cors");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const session = require("express-session");
 
@@ -9,12 +10,17 @@ const app = express();
 // ✅ Supabase client
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_API_KEY);
 
+// ✅ CORS for Vercel frontend
+app.use(cors({
+  origin: "https://rocket-chai.vercel.app", // replace with your actual Vercel URL
+  credentials: true
+}));
+
 // ✅ EJS setup
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// ✅ Static assets
-app.use(express.static(path.join(__dirname, "../frontend")));
+// ✅ Static assets (used by scan/admin views)
 app.use(express.static(path.join(__dirname, "public")));
 
 // ✅ JSON parsing
@@ -32,28 +38,30 @@ app.use((req, res, next) => {
   console.log("Session state:", req.session);
   next();
 });
+
+// ✅ Health check
 app.get("/healthz", (req, res) => res.send("OK"));
 
-
-// ✅ Homepage
+// ✅ Redirect homepage to Vercel
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/index.html"));
+  res.redirect("https://rocket-chai.vercel.app/"); 
 });
 
-// ✅ Scan page
+// ✅ Scan page (EJS view)
 app.get("/scan", (req, res) => {
   const cart = req.session.cart || {};
   const total = req.session.total || 0;
-   const hasItems = Object.keys(cart).length > 0;
+  const hasItems = Object.keys(cart).length > 0;
 
   if (!hasItems || total <= 0) {
-     req.session.flash = "🛒 Please choose your items before scanning to pay.";
-
-    return res.redirect("/"); // or show a message page if you prefer
+    req.session.flash = "🛒 Please choose your items before scanning to pay.";
+    return res.redirect("/");
   }
 
   res.render("scan", { cart, total });
 });
+
+// ✅ Flash message script
 app.get("/flash.js", (req, res) => {
   const message = req.session.flash || "";
   delete req.session.flash;
@@ -100,7 +108,6 @@ app.get("/admin", async (req, res) => {
   if (!req.session.isAdmin) return res.status(403).send("Access denied");
 
   const { data, error } = await supabase.from("orders").select("*");
-  console.log("Fetched orders:", data);
   if (error) {
     console.error("❌ Supabase fetch error:", error.message);
     return res.status(500).send("Error fetching orders");
@@ -108,8 +115,8 @@ app.get("/admin", async (req, res) => {
 
   res.render("admin", { orders: data });
 });
-app.get("/healthz", (req, res) => res.send("OK"));
+
 // ✅ Start server
 app.listen(3000, () => {
-  console.log("🚀 Rocket Chai running at http://localhost:3000");
+  console.log("🚀 Rocket Chai backend running at http://localhost:3000");
 });
