@@ -4,7 +4,7 @@ let itemCount = 0;
 
 const backendURL = window.location.hostname === "localhost"
   ? "http://localhost:3000"
-  : "https://rocket-chai-backend.onrender.com";
+  : "https://rocket-chai-app.onrender.com";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Handle Add to Cart buttons
@@ -37,14 +37,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const scanBtn = document.getElementById("scan-btn");
   if (scanBtn) {
     scanBtn.addEventListener("click", () => {
-      fetch(`${backendURL}/save-cart`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cart, total: totalPrice })
-      }).then(() => {
-        window.location.href = `${backendURL}/scan`;
-      });
-    });
+  console.log("Scan button clicked!");
+  fetch(`${backendURL}/save-cart`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+     credentials: "include",  
+    body: JSON.stringify({ cart, total: totalPrice })
+  })
+  .then(() => {
+    window.location.href = `${backendURL}/scan`;
+  })
+  .catch(err => {
+    console.error("Fetch error:", err);
+     alert("Failed to save cart. Please try again.");
+  });
+
+});
+
   }
 });
 

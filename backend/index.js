@@ -4,17 +4,19 @@ const { createClient } = require('@supabase/supabase-js');
 const cors = require("cors");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const session = require("express-session");
-
+const port=process.env.PORT||3000;
 const app = express();
 
 // ✅ Supabase client
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_API_KEY);
 
-// ✅ CORS for Vercel frontend
-app.use(cors({
-  origin: "https://rocket-chai.vercel.app", // replace with your actual Vercel URL
+const corsOptions = {
+  origin: ["https://rocket-chai.vercel.app", "http://localhost:3000"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
-}));
+};
+// ✅ CORS for Vercel frontend
+app.use(cors(corsOptions));
 
 // ✅ EJS setup
 app.set("view engine", "ejs");
@@ -118,5 +120,5 @@ app.get("/admin", async (req, res) => {
 
 // ✅ Start server
 app.listen(3000, () => {
-  console.log("🚀 Rocket Chai backend running at http://localhost:3000");
+  console.log(`🚀 Rocket Chai backend running at http://localhost:${port}`);
 });
