@@ -3,16 +3,16 @@ let totalPrice = 0;
 let itemCount = 0;
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Handle Add to Cart buttons
-  const buttons = document.querySelectorAll(".item-btn");
+  const incButtons = document.querySelectorAll(".inc-btn");
+  const decButtons = document.querySelectorAll(".dec-btn");
 
-  buttons.forEach(button => {
+  incButtons.forEach(button => {
     button.addEventListener("click", function () {
       const card = this.closest(".item-card");
       const name = card.querySelector("h3").textContent;
       const price = parseInt(card.getAttribute("data-price"));
+      const quantitySpan = card.querySelector(".quantity");
 
-      // Cart logic
       if (!cart[name]) {
         cart[name] = { quantity: 1, price };
       } else {
@@ -21,22 +21,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
       itemCount++;
       totalPrice += price;
+
+      quantitySpan.textContent = cart[name].quantity;
+
       updateCartDisplay();
 
-      //  animation
       this.classList.add("clicked");
       setTimeout(() => this.classList.remove("clicked"), 800);
     });
   });
 
-  // Handle Scan to Pay button
+  decButtons.forEach(button => {
+    button.addEventListener("click", function () {
+      const card = this.closest(".item-card");
+      const name = card.querySelector("h3").textContent;
+      const price = parseInt(card.getAttribute("data-price"));
+      const quantitySpan = card.querySelector(".quantity");
+
+      if (cart[name] && cart[name].quantity > 0) {
+        cart[name].quantity -= 1;
+        itemCount--;
+        totalPrice -= price;
+
+        quantitySpan.textContent = cart[name].quantity;
+
+        if (cart[name].quantity === 0) {
+          delete cart[name];
+        }
+
+        updateCartDisplay();
+
+        this.classList.add("clicked");
+        setTimeout(() => this.classList.remove("clicked"), 800);
+      }
+    });
+  });
+
   const scanBtn = document.getElementById("scan-btn");
   if (scanBtn) {
     scanBtn.addEventListener("click", () => {
       fetch("/save-cart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cart, total: totalPrice })
+        body: JSON.stringify({
+          item: cart,          // ✅ Rename cart to item
+          quantity: itemCount  // ✅ Rename total to quantity
+        })
       }).then(() => {
         window.location.href = "/scan";
       });
@@ -44,7 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Update cart summary display
 function updateCartDisplay() {
   const itemCountEl = document.getElementById("item-count");
   const totalPriceEl = document.getElementById("total-price");

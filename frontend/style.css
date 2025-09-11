@@ -23,7 +23,7 @@ span{
     font-family: "Trirong", serif;
     font-weight: 900;
     font-style: italic;
-    color: rgb(241, 113, 84);
+    color: rgb(255, 113, 84);
 }
 .menu {
   display: flex;
@@ -238,4 +238,13 @@ flex-wrap: wrap;
   font-weight: 900;
   font-size: larger;
   text-align: center;
+}
+.quantity{
+  color: white;
+}
+#item-count{
+  color:rgb(255,7,7);
+}
+#total-price{
+  color:rgb(255, 7, 7);
 }

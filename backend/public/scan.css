@@ -17,7 +17,7 @@ body {
 /* Scanner container */
 .scanner-box {
   background-color: rgba(255, 255, 255, 0.85);
-  width: 90%;
+  width: 95%;
   max-width: 500px;
   height: auto;
   max-height: 90vh;
@@ -200,4 +200,113 @@ button:hover {
     max-height: calc(100vh - 80px); /* Adjust for margins + paddings */
     overflow-y: auto;
   }
+}
+
+.upi-id-group input{
+  background-color: #fff;
+   color: #ff7373;
+}
+/* .payment-verify {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+}
+
+.payment-verify> div {
+  display: flex;
+  flex-direction: column;
+  flex: 1; 
+}
+
+.payment-verify label {
+  margin-bottom: 5px;
+  font-weight: 600;
+} */
+
+
+.payment-verify label {
+  margin-bottom: 8px;
+  font-weight: 900;
+  font-size: 20px;
+  color: #333;
+}
+
+.payment-verify input[type="text"],
+.payment-verify input[type="file"] {
+  width: 100%;
+  padding: 12px 10px;
+  font-size: 1em;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  min-height: 44px;
+  transition: border-color 0.3s ease;
+}
+
+.payment-verify input[type="text"]:focus,
+.payment-verify input[type="file"]:focus {
+  outline: none;
+  border-color: #daa99f;
+}
+
+.custom-file-input {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+#file-select-btn {
+  background-color: #fff;
+   flex-shrink: 0;
+  color: #ff7373;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+   min-width: 130px;
+}
+
+
+#file-select-btn:hover {
+  background-color: #d85a3e;
+  color: white;
+}
+
+#file-selected-text {
+  font-size: 14px;
+  color: #2a7f2a; /* green color for success */
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* #file-selected-text::before {
+  content: '✓';
+  color: #2a7f2a;
+  font-weight: 900;
+  font-size: 18px;
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  z-index: -1;
+} */
+#file-selected-text.has-file::before {
+  display: inline;
+}
+.payment-verify{
+ display: flex;
+  flex-direction: column; /* stack vertically */
+  gap: 16px; /* space between fields */
+  width: 100%;
+  align-items: stretch;
 }

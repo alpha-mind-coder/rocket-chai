@@ -19,9 +19,32 @@
         <p><strong>Student ID:</strong> <%= order.student_id || "N/A" %></p>
         <p><strong>Phone:</strong> <%= order.phone || "N/A" %></p>
         <p><strong>Email:</strong> <%= order.email || "N/A" %></p>
-        <p><strong>Item:</strong> <%= order.item || "N/A" %></p>
+        <!-- <p><strong>Item:</strong> <%= order.item || "N/A" %></p> -->
         <p><strong>Quantity:</strong> <%= order.quantity || 0 %></p>
+
+        <h4>Items:</h4>
+        <ul>
+          <% 
+            let items = [];
+            try {
+              items = JSON.parse(order.item);
+            } catch(e) {
+              // fallback if JSON parsing fails
+            }
+          %>
+          <% for (const [itemName, details] of Object.entries(items)) { %>
+            <li><strong><%= itemName %></strong> - Quantity: <%= details.quantity %>, Price: ₹<%= details.price %></li>
+          <% } %>
+        </ul>
+
+        <% if (order.screenshot_url) { %>
+          <h4>Payment Screenshot:</h4>
+          <img src="<%= order.screenshot_url %>" alt="Payment Screenshot" style="max-width:300px; border:1px solid #ccc; padding:5px;" />
+        <% } else { %>
+          <p><em>No payment screenshot uploaded.</em></p>
+        <% } %>
       </div>
+      <hr>
     <% }) %>
   <% } %>
 </body>

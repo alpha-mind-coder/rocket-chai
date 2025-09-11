@@ -10,68 +10,62 @@
 <body>
   <div class="scanner-box">
     <div class="scanner-content">
-    <a href="/" class="close-btn">✖</a>
-     <h2>Please enter your details to confirm the order</h2>
-    <form id="customer-form">
-      <input type="text" id="name" placeholder="Name" required />
-      <input type="text" id="studentid" placeholder="Student ID" required />
-      <input type="text" id="contact" placeholder="Contact No." required />
-      <input type="email" id="email" placeholder="Email ID" required />
-      <div class="img-wrapper">
-        <img class="qr-image" src="/images/qr_image.png" alt="QR Code" />
-      <h3 class="upi-id" >UPI ID: Q564743460@ybl</h3>
+      <a href="/" class="close-btn">✖</a>
+      <h2>Please enter your details to confirm the order</h2>
+      <form id="customer-form" method="POST"enctype="multipart/form-data">
+        
+        <input type="text" id="name" name="name" placeholder="Name" required />
+        <input type="text" id="studentid" name="student_id" placeholder="Student ID" required />
+        <input type="text" id="contact" name="phone" placeholder="Contact No." required />
+        <input type="email" id="email" name="email" placeholder="Email ID" required />
+        
+        <div class="img-wrapper">
+          <img class="qr-image" src="/images/qr_image.png" alt="QR Code" />
+          <h3>Your Total is : ₹ <%=total%></h3>
+          <h3 class="upi-id">UPI ID: Q564743460@ybl</h3>
+        </div>  
+
+        <div class="payment-verify">
+          <div class="upi-id-group">
+            <label for="upi-id-input">Enter your UPI ID:</label>
+            <input
+              type="text"
+              id="upi-id-input"
+              name="upi_id"
+              placeholder="X000000000@abc"
+              required
+              maxlength="20"
+              minlength="6"
+            />
+          </div>
+
+          <div class="screenshot-group">
+            <label for="payment-screenshot">Upload Payment Screenshot:</label>
+            <div class="custom-file-input">
+              <input
+                type="file"
+                id="payment-screenshot"
+                name="payment_screenshot"
+                accept="image/*"
+                required
+              />
             </div>
-      <br>
-      <button type="submit">Click to place order after payment</button>
-    </form>
+          </div>  
+        </div>
+        
+        <br />
+        <button type="submit">Click to place order after payment</button>
+      </form>
     </div>
   </div>
 
+  <!-- ✅ Corrected data keys: -->
   <div id="order-data"
-     data-cart='<%= JSON.stringify(cart) %>'
-     data-total="<%= total %>">
-</div>
+       data-item='<%= JSON.stringify(cart) %>'
+       data-quantity="<%= quantity %>">
+        data-total="<%= total %>">
+  </div>
 
-  <script>
-  const orderData = document.getElementById("order-data");
-  const cart = JSON.parse(orderData.dataset.cart);
-  const total = parseInt(orderData.dataset.total);
-
-  document.getElementById("customer-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-  const customer = {
-  name: document.getElementById("name").value,
-  student_id: document.getElementById("studentid").value,
-  phone: document.getElementById("contact").value,
-  email: document.getElementById("email").value,
-  item: "cart", // optional if you want to pass item name
-  quantity: total // optional if you want to pass quantity
-};
-
-    const response = await fetch("/submit-order", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ 
-        name: document.getElementById("name").value,
-        student_id: document.getElementById("studentid").value,
-        phone: document.getElementById("contact").value,
-        email: document.getElementById("email").value,
-        item: "cart",
-        quantity: total
-
-       })
-    });
-
-    if (response.ok) {
-      alert("✅ Order confirmed! Thank you.");
-      window.location.href = "/";
-    } else {
-      alert("❌ Something went wrong. Please try again.");
-    }
-  });
-</script>
-
-
+  <script src="/scan.js"></script>
 </body>
 </html>
