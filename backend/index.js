@@ -4,24 +4,36 @@ const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 
 const { createClient } = require('@supabase/supabase-js');
+const cors = require("cors");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const session = require("express-session");
 
+const port = process.env.PORT || 3000;
 const app = express();
 
 // ✅ Supabase client
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 
+const corsOptions = {
+  origin: ["https://rocket-chai.vercel.app", "http://localhost:3000"],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true
+};
+// ✅ CORS for Vercel frontend
+app.use(cors(corsOptions));
+
 // ✅ EJS setup
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// ✅ Static assets
-app.use(express.static(path.join(__dirname, "../frontend")));
+// ✅ Static assets (used by scan/admin views)
 app.use(express.static(path.join(__dirname, "public")));
 
 // ✅ JSON parsing
 app.use(express.json());
+
+// ✅ Parse URL-encoded form data (important for forms)
+app.use(express.urlencoded({ extended: true }));
 
 // ✅ Session middleware
 app.use(session({
@@ -36,14 +48,17 @@ app.use((req, res, next) => {
   next();
 });
 
-// ✅ Homepage
+// ✅ Health check (single route)
+app.get("/healthz", (req, res) => res.send("OK"));
+
+// ✅ Redirect homepage to Vercel
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/index.html"));
+  res.redirect("https://rocket-chai.vercel.app/");
 });
 
-// ✅ Scan page
+// ✅ Scan page (EJS view)
 app.get("/scan", (req, res) => {
-  const cart = req.session.item || {};       // ✅ Use 'item' instead of 'cart'
+  const cart = req.session.item || {};
   const quantity = req.session.quantity || 0;
   const hasItems = Object.keys(cart).length > 0;
 
@@ -51,34 +66,36 @@ app.get("/scan", (req, res) => {
     req.session.flash = "🛒 Please choose your items before scanning to pay.";
     return res.redirect("/");
   }
-   let total = 0;
+
+  let total = 0;
   for (const key in cart) {
     total += cart[key].price * cart[key].quantity;
   }
-  res.render("scan", { cart, quantity ,total});
+
+  res.render("scan", { cart, quantity, total });
 });
 
-
+// Flash message endpoint
 app.get("/flash.js", (req, res) => {
   const message = req.session.flash || "";
   delete req.session.flash;
   res.type("application/javascript").send(`window.flashMessage = "${message}";`);
 });
 
-// ✅ Save cart
+// Save cart to session
 app.post("/save-cart", (req, res) => {
   req.session.item = req.body.item;
   req.session.quantity = req.body.quantity;
   res.sendStatus(200);
 });
 
-// ✅ Submit order to Supabase
+// Submit order to Supabase
 app.post("/submit-order", upload.single("payment_screenshot"), async (req, res) => {
   console.log("Received file:", req.file);
   console.log("Received body:", req.body);
 
   const { name, student_id, phone, email } = req.body;
-  
+
   const cart = req.body.item ? JSON.parse(req.body.item) : null;
   const quantity = req.body.quantity ? parseInt(req.body.quantity, 10) : 0;
 
@@ -140,9 +157,7 @@ app.post("/submit-order", upload.single("payment_screenshot"), async (req, res) 
   }
 });
 
-
-
-// ✅ Admin login
+// Admin login
 app.get("/login-admin", (req, res) => {
   const { code } = req.query;
   if (code === process.env.ADMIN_PASS) {
@@ -155,12 +170,11 @@ app.get("/login-admin", (req, res) => {
   }
 });
 
-// ✅ Admin dashboard
+// Admin dashboard
 app.get("/admin", async (req, res) => {
   if (!req.session.isAdmin) return res.status(403).send("Access denied");
 
   const { data, error } = await supabase.from("orders").select("*");
-  console.log("Fetched orders:", data);
   if (error) {
     console.error("❌ Supabase fetch error:", error.message);
     return res.status(500).send("Error fetching orders");
@@ -169,9 +183,7 @@ app.get("/admin", async (req, res) => {
   res.render("admin", { orders: data });
 });
 
-app.get("/healthz", (req, res) => res.send("OK"));
-
 // ✅ Start server
-app.listen(3000, () => {
-  console.log("🚀 Rocket Chai running at http://localhost:3000");
+app.listen(port, () => {
+  console.log(`🚀 Rocket Chai backend running at http://localhost:${port}`);
 });

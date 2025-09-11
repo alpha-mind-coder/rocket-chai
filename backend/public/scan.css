@@ -47,7 +47,7 @@ body {
 /* Close button */
 .close-btn {
   position: absolute;
-  top: 12px;
+  top: 8px;
   right: 12px;
   background-color: #f17154;
   color: white;
