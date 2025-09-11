@@ -4,7 +4,7 @@ let itemCount = 0;
 
 const backendURL = window.location.hostname === "localhost"
   ? "http://localhost:3000"
-  : "https://rocket-chai-app.onrender.com";
+  : "https://rocket-chai-backend.onrender.com";
 
 document.addEventListener("DOMContentLoaded", () => {
   const incButtons = document.querySelectorAll(".inc-btn");
