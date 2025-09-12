@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const scanBtn = document.getElementById("scan-btn");
   if (scanBtn) {
     scanBtn.addEventListener("click", () => {
-      fetch("/save-cart", {
+      fetch(`${backendURL}/save-cart`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", 
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
         quantity: itemCount  // ✅ must be 'quantity'
       })
     }).then(() => {
-      window.location.href = "/scan";
+      window.location.href =  `${backendURL}/scan`;
     }).catch(err => {
       console.error("Error saving cart:", err);
       alert("Failed to proceed. Please try again.");
