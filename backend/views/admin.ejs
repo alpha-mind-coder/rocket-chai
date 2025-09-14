@@ -55,7 +55,7 @@
               <% } %>
             </td>
              <td>
-              <button class="delete-order-btn" data-id="<%= order._id %>">Delete</button>
+              <button class="delete-order-btn" data-id="<%= order.id %>">Delete</button>
             </td>
           </tr>
         <% }) %>
@@ -74,7 +74,8 @@
             method: "DELETE",
             headers: {
               "Content-Type": "application/json"
-            }
+            },
+            credentials: "include"
           })
           .then(res => {
             if (res.ok) {
