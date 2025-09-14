@@ -39,7 +39,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({
   secret: "rocket-secret",
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+    cookie: {
+    sameSite: "none",   // ⬅️ required for cross-site cookies
+    secure: true        // ⬅️ required for HTTPS (Render is HTTPS)
+  }
 }));
 
 // ✅ Debug session
@@ -58,6 +62,8 @@ app.get("/", (req, res) => {
 
 // ✅ Scan page (EJS view)
 app.get("/scan", (req, res) => {
+   console.log("🧪 /scan hit");
+  console.log("🧪 Session at /scan:", req.session);
   const cart = req.session.item || {};
   const quantity = req.session.quantity || 0;
   const hasItems = Object.keys(cart).length > 0;
