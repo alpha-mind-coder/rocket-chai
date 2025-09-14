@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    return response.json(); // or text(), depending on your backend response
+    return response.text(); // or text(), depending on your backend response
   })
   .then(data => {
     console.log("✅ /save-cart success:", data);
