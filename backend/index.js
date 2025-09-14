@@ -40,7 +40,7 @@ app.use(session({
   secret: "rocket-secret",
   resave: false,
   saveUninitialized: true,
-   cookie: {
+    cookie: {
     sameSite: "none",   // ⬅️ required for cross-site cookies
     secure: true        // ⬅️ required for HTTPS (Render is HTTPS)
   }

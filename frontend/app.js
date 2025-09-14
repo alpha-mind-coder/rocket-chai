@@ -74,9 +74,18 @@ document.addEventListener("DOMContentLoaded", () => {
         item: cart,          // ✅ must be 'item'
         quantity: itemCount  // ✅ must be 'quantity'
       })
-    }).then(() => {
-      window.location.href =  `${backendURL}/scan`;
-    }).catch(err => {
+    })
+     .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.text(); // or text(), depending on your backend response
+  })
+  .then(data => {
+    console.log("✅ /save-cart success:", data);
+    window.location.href = `${backendURL}/scan`;
+  })
+    .catch(err => {
       console.error("Error saving cart:", err);
       alert("Failed to proceed. Please try again.");
     });
