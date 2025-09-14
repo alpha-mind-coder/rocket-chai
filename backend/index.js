@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
+const isAdmin = require("./middleware/isAdmin");
 
 const { createClient } = require('@supabase/supabase-js');
 const cors = require("cors");
@@ -191,6 +192,26 @@ app.get("/admin", async (req, res) => {
   }
 
   res.render("admin", { orders: data });
+});
+
+app.delete("/admin/orders/:id", isAdmin, async (req, res) => {
+  const orderId = req.params.id;
+  try {
+    const { error } = await supabase
+      .from('orders')
+      .delete()
+      .eq('id', orderId);
+
+    if (error) {
+      console.error("Error deleting order:", error);
+      return res.status(500).send("Failed to delete order");
+    }
+
+    res.status(200).send("Order deleted");
+  } catch (err) {
+    console.error("Unexpected error deleting order:", err);
+    res.status(500).send("Server error");
+  }
 });
 
 // ✅ Start server
