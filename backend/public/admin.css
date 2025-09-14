@@ -41,3 +41,9 @@ h2 {
   padding: 4px;
   border-radius: 4px;
 }
+
+.delete-order-btn{
+  background-color: rgb(235, 57, 57);
+  color: white;
+  border-radius: 20px;
+}
