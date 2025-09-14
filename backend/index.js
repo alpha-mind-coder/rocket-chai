@@ -39,7 +39,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({
   secret: "rocket-secret",
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: true,
+   cookie: {
+    sameSite: "none",   // ⬅️ required for cross-site cookies
+    secure: true        // ⬅️ required for HTTPS (Render is HTTPS)
+  }
 }));
 
 // ✅ Debug session
