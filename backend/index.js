@@ -25,6 +25,8 @@ app.use(cors(corsOptions));
 // ✅ EJS setup
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.set('trust proxy', 1);
+
 
 // ✅ Static assets (used by scan/admin views)
 app.use(express.static(path.join(__dirname, "public")));
@@ -42,7 +44,9 @@ app.use(session({
   saveUninitialized: true,
     cookie: {
     sameSite: "none",   // ⬅️ required for cross-site cookies
-    secure: true        // ⬅️ required for HTTPS (Render is HTTPS)
+    secure: true ,
+      httpOnly:true
+      // ⬅️ required for HTTPS (Render is HTTPS)
   }
 }));
 
