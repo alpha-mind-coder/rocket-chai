@@ -22,6 +22,7 @@
           <th>Quantity</th>
           <th>Items</th>
           <th>Payment Screenshot</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -34,13 +35,13 @@
             <td><%= order.email || "N/A" %></td>
             <td><%= order.quantity || 0 %></td>
             <td>
-              <% 
+              <ul>
+                <% 
                 let items = [];
                 try {
                   items = JSON.parse(order.item);
                 } catch(e) {}
               %>
-              <ul>
                 <% for (const [itemName, details] of Object.entries(items)) { %>
                   <li><strong><%= itemName %></strong> - Qty: <%= details.quantity %>, ₹<%= details.price %></li>
                 <% } %>
@@ -53,10 +54,41 @@
                 <em>No screenshot</em>
               <% } %>
             </td>
+             <td>
+              <button class="delete-order-btn" data-id="<%= order._id %>">Delete</button>
+            </td>
           </tr>
         <% }) %>
       </tbody>
     </table>
   <% } %>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const deleteButtons = document.querySelectorAll(".delete-order-btn");
+
+    deleteButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const orderId = button.getAttribute("data-id");
+        if (confirm("Are you sure you want to delete this order?")) {
+          fetch(`/admin/orders/${orderId}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
+          .then(res => {
+            if (res.ok) {
+              // Remove the row from table
+              button.closest("tr").remove();
+            } else {
+              alert("Failed to delete order.");
+            }
+          })
+          .catch(() => alert("Error deleting order."));
+        }
+      });
+    });
+  });
+</script>
 </body>
 </html>
