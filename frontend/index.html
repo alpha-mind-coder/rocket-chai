@@ -11,70 +11,140 @@
 </head>
 <body>
   <div class="outerdiv">
+    <div class="innerdiv">
+        <!-- <h1>Welcome to <span>ROCKET CHAI</span> !!! </h1>
+        <h4>Built for foodies who move fast and eat bold.</h4> -->
+     </div>
    
    <div class="innerouterdiv">
-     <div class="innerdiv">
-        <h1>Welcome to <span>ROCKET CHAI</span> !!! </h1>
-        <h4>Built for foodies who move fast and eat bold.</h4>
+     
         <div class="contentfixer">
         <div class="outercontent">
+          <div class="heading">
+            <h3>What are you craving for !!!</h3>
+          </div>
           <div class="menu">
             <div class="item-card" data-price="120">
-                <img src="./images/burger image.png" alt="Burger" />
-                <h3>Burger</h3>
-                <p>₹120</p>
+              <form action="http://localhost:3000/pizza" method="get">
+              <button>
+                <img src="./images/pizzaimage.jpeg" alt="Pizza" />
+                <h3>Veg Pizzas</h3>
+              </button> 
+              </form> 
+                <!-- <p>₹120</p>
                 <div class="item-btn">
                   <button class="dec-btn">-</button>
                   <span class="quantity">0</span>
                   <button class="inc-btn">+</button>
-                </div>
+                </div> -->
+
+            </div>
+             <div class="item-card" data-price="120">
+              <form action="http://localhost:3000/mania" method="get">
+              <button>
+                <img src="./images/pizzaimage.jpeg" alt="Pizza" />
+                <h3>Pizza Mania</h3>
+              </button> 
+              </form> 
+                <!-- <p>₹120</p>
+                <div class="item-btn">
+                  <button class="dec-btn">-</button>
+                  <span class="quantity">0</span>
+                  <button class="inc-btn">+</button>
+                </div> -->
+
+            </div>
+            <div class="item-card" data-price="120">
+               <form action="http://localhost:3000/NVpizza" method="get">
+              <button>
+                <img src="./images/nonveg_pizza_image.webp" alt="pizza" />
+                <h3>Non-Veg Pizzas</h3>
+              </button>
+            </form>  
+                <!-- <p>₹120</p>
+                <div class="item-btn">
+                  <button class="dec-btn">-</button>
+                  <span class="quantity">0</span>
+                  <button class="inc-btn">+</button>
+                </div> -->
 
             </div>
             <div class="item-card" data-price="200">
-                <img src="./images/pizzaimage.jpeg" alt="Pizza" />
+               <form action="http://localhost:3000/burger" method="get">
+              <button>
+                <img src="./images/burger_pizza.webp" alt="burger-Pizza" />
 
-                <h3>Pizza</h3>
-                <p>₹200</p>
+                <h3>Burger Pizza</h3>
+              </button> 
+              </form> 
+                <!-- <p>₹200</p>
                 <div class="item-btn">
                   <button class="dec-btn">-</button>
                   <span class="quantity">0</span>
                   <button class="inc-btn">+</button>
-                </div>
+                </div> -->
             </div>
             <div class="item-card" data-price="60">
-                <img src="./images/coconut water.jpeg" alt="Coconut Water" />
+               <form action="http://localhost:3000/coconut" method="get">
+              <button>
+                <img src="./images/coconut-water.jpeg" alt="Coconut Water" />
                 <h3>Coconut Water</h3>
-                <p>₹60</p>
+              </button>  
+              </form>
+                <!-- <p>₹60</p>
                <div class="item-btn">
                   <button class="dec-btn">-</button>
                   <span class="quantity">0</span>
                   <button class="inc-btn">+</button>
-                </div>
+                </div> -->
             </div>
            <div class="item-card" data-price="120">
-                <img src="./images/burger image.png" alt="Burger" />
-                <h3>Burger</h3>
-                <p>₹120</p>
+             <form action="http://localhost:3000/garlic" method="get">
+            <button>
+                <img src="./images/garlic_bread.webp" alt="garlic_bread" />
+                <h3>Garlic Bread</h3>
+            </button>  
+            </form>  
+                <!-- <p>₹120</p>
                <div class="item-btn">
                   <button class="dec-btn">-</button>
                   <span class="quantity">0</span>
                   <button class="inc-btn">+</button>
-                </div>
+                </div> -->
             </div>
              <div class="item-card" data-price="120">
-                <img src="./images/burger image.png" alt="Burger" />
-                <h3>Burger</h3>
-                <p>₹120</p>
+               <form action="http://localhost:3000/taco" method="get">
+              <button>
+                <img src="./images/taco.webp" alt="taco" />
+                <h3>Taco Mexicana</h3>
+              </button>
+              </form>
+                <!-- <p>₹120</p>
                 <div class="item-btn">
                   <p>Add you items</p>
                   <button class="dec-btn">-</button>
                   <span class="quantity">0</span>
                   <button class="inc-btn">+</button>
-                </div>
+                </div> -->
+            </div>
+             <div class="item-card" data-price="120">
+               <form action="http://localhost:3000/dessert" method="get">
+              <button>
+                <img height="100px" src="./images/dessert.jpg" alt="desserts" />
+                <h3>Desserts</h3>
+              </button>
+              </form>
+                <!-- <p>₹120</p>
+                <div class="item-btn">
+                  <p>Add you items</p>
+                  <button class="dec-btn">-</button>
+                  <span class="quantity">0</span>
+                  <button class="inc-btn">+</button>
+                </div> -->
             </div>
           </div>
 
-          <div class="cart-summary">
+          <!-- <div class="cart-summary">
             <img class="scroll" src="./images/scrolling.png" alt="SCROLL IT UP FOR BILL DETAILS">
            
             <h3>🛒 Cart Summary</h3>
@@ -88,10 +158,11 @@
               <p>CLICK HERE FOR PAYMENT</p> 
             </button>
           </div>
-        </div>
+        </div> -->
     </div>
     </div>
-   </div>
+    </div>
+   
   </div>
   <script src="/flash.js"></script>
   <script>

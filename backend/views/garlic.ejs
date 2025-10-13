@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mania</title>
+   <link rel="stylesheet" href="/vegpizza.css" />
+</head>
+<body>
+  <div class="fixer">
+    <div class="first">
+      <a href="<%= process.env.FRONTEND_URL || 'http://127.0.0.1:3000/' %>">🡐   </a>
+      <span>Garlic Bread Menu</span>
+    </div>
+   <!-- <br> -->
+    <div class="sec">
+      <a href="/mania">Veg Mania</a>
+      <a href="/NVpizza">Non-Veg Pizza</a>
+      <a href="/burger">Burger-Pizza</a>
+      <a href="/pizza">Veg Pizza</a>
+      <a href="/taco">Tacos</a>
+      <a href="/dessert">Desserts</a>
+    </div>
+  </div>
+  <div class="container">
+    <div class="pizza-scroll">
+      
+      <div class="pizza-card" data-pizza-id="18">
+        <h3 class="pizza-name">paneer_tikka_stuffed_garlic_bread</h3> 
+        <div class="img-container">
+            <img class="oneimg" src="https://vecnarybupdndjalmlmr.supabase.co/storage/v1/object/public/backend-images/paneer_tikka_stuffed_garlic_bread.jpg" alt="pizza image" />
+        </div>
+            <div class="size-quantity">
+            <div class="pizza-actions">
+                <span data-size="Regular" data-price="209">₹ 209</span>
+                <button class="decrease" data-size="Regular"><span>-</span></button>
+                <span class="qty" data-size="Regular">0</span>
+                <button class="increase" data-size="Regular"><span>+</span></button>
+                <!-- <button class="customize-btn">Customize Your Order</button> -->
+            </div>
+           
+          </div>
+      </div>
+
+
+      <div class="pizza-card" data-pizza-id="19">
+        <h3 class="pizza-name">Garlic_breadsticks</h3> 
+         <div class="img-container">
+            <img class="oneimg" src="https://vecnarybupdndjalmlmr.supabase.co/storage/v1/object/public/backend-images/Garlic_breadsticks.jpg" alt="pizza image" />
+             
+        </div>
+             <div class="size-quantity">
+            <div class="pizza-actions">
+                <span data-size="Regular" data-price="149">₹ 149</span>
+                <button class="decrease" data-size="Regular">-</button>
+                <span class="qty" data-size="Regular">0</span>
+                <button class="increase" data-size="Regular">+</button>
+               
+            </div>
+           
+          </div>
+      </div>
+
+
+      <div class="pizza-card" data-pizza-id="20">
+        <h3 class="pizza-name">fiery_corn&Jalapeno_garlic</h3> 
+        <div class="img-container">
+            <img class="oneimg" src="https://vecnarybupdndjalmlmr.supabase.co/storage/v1/object/public/backend-images/fiery_corn&Jalapeno_garlic.jpg" alt="pizza image" />
+             
+        </div>
+              <div class="size-quantity">
+            <div class="pizza-actions">
+                <span data-size="Regular" data-price="209">₹ 209</span>
+                <button class="decrease" data-size="Regular">-</button>
+                <span class="qty" data-size="Regular">0</span>
+                <button class="increase" data-size="Regular">+</button>
+                <!-- <button class="customize-btn">Customize Your Order</button> -->
+            </div>
+           
+          </div>
+
+      </div>
+
+
+      <div class="pizza-card" data-pizza-id="21">
+        <div class="img-container">
+            <img class="oneimg" src="https://vecnarybupdndjalmlmr.supabase.co/storage/v1/object/public/backend-images/Chicken_pepperoni_stuffed_garlic.jpg" alt="pizza image" />
+             
+        </div>
+             <div class="size-quantity">
+            <div class="pizza-actions">
+                <span data-size="Regular" data-price="209">₹ 209</span>
+                <button class="decrease" data-size="Regular">-</button>
+                <span class="qty" data-size="Regular">0</span>
+                <button class="increase" data-size="Regular">+</button>
+                <!-- <button class="customize-btn">Customize Your Order</button> -->
+            </div>
+          </div>
+
+      </div>
+      <div class="extra"></div>
+  <!-- Sticky Cart Footer -->
+<footer id="cart-footer">
+  <div id="cart-summary"> 
+    <button id="view-cart-btn"><span id="cart-count">0</span>🛒 View Cart Details</button>
+  </div>
+</footer>
+
+<!-- Cart Panel (hidden by default) -->
+<div id="cart-panel" style="display:none;">
+  <h3>Your Cart</h3>
+  <ul id="cart-items"></ul>
+  <p>Total: ₹<span id="cart-total-panel">0</span></p>
+  <form id="order-form" action="/save-cart" method="POST">
+   <button id="place-order">Place Order</button>
+  </form>
+  <button id="close-cart">Close</button>
+</div>
+
+  <script src="/Inc_Dec.js"></script>
+</body>
+</html>

@@ -12,7 +12,7 @@
     <div class="scanner-content">
       <a href="/" class="close-btn">✖</a>
       <h2>Please enter your details to confirm the order</h2>
-      <form id="customer-form" method="POST"enctype="multipart/form-data">
+      <form id="customer-form" method="POST" action="/submit-order" enctype="multipart/form-data">
         
         <input type="text" id="name" name="name" placeholder="Name" required />
         <input type="text" id="studentid" name="student_id" placeholder="Student ID" required />
@@ -52,7 +52,8 @@
             </div>
           </div>  
         </div>
-        
+        <input type="hidden" name="item" id="cart-data" value='<%= JSON.stringify(cart) %>'>
+        <input type="hidden" name="quantity" id="cart-qty" value="<%= quantity %>">
         <br />
         <button type="submit">Click to place order after payment</button>
       </form>
@@ -63,7 +64,7 @@
   <div id="order-data"
        data-item='<%= JSON.stringify(cart) %>'
        data-quantity="<%= quantity %>"
-        data-total="<%= total %>"
+        data-total="<%= total %>">
   </div>
 
   <script src="/scan.js"></script>

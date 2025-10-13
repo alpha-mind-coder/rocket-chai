@@ -1,26 +1,34 @@
-// const express = require("express");
-// const router = express.Router();
-// const isAdmin = require("../middleware/isAdmin");
-// const mysql = require("mysql2");
+const express = require("express");
+const router = express.Router();
+const { createClient } = require("@supabase/supabase-js");
+const isAdmin = require("../middleware/isAdmin");
+require("dotenv").config({ path: "../.env" });
 
-// // Use same DB config as index.js
-// const db = mysql.createConnection({
-//   host: process.env.DB_HOST,
-//   user: process.env.DB_USER,
-//   password: process.env.DB_PASS,
-//   database: process.env.DB_NAME
-// });
+// ✅ Supabase setup
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
 
-// db.connect(err => {
-//   if (err) throw err;
-//   console.log("✅ Admin route connected to MySQL");
-// });
+// ✅ Admin dashboard route
+router.get("/admin", isAdmin, async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from("orders")
+      .select("*")
+      .order("id", { ascending: false });
 
-// router.get("/admin", isAdmin, (req, res) => {
-//   db.query("SELECT * FROM orders", (err, results) => {
-//     if (err) return res.status(500).send("Error fetching orders");
-//     res.render("admin", { orders: results });
-//   });
-// });
+    if (error) {
+      console.error("❌ Supabase fetch error:", error.message);
+      return res.status(500).send("Error fetching orders");
+    }
 
-// module.exports = router;
+    res.render("admin", { orders: data });
+  } catch (err) {
+    console.error("❌ Unexpected admin fetch error:", err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+module.exports = router;

@@ -1,0 +1,81 @@
+.burger-container {
+  background-color: rgba(255, 255, 255, 0.3);
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+
+.burger-item {
+  background-color: rgba(245, 152, 60, 0.15);
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Each burger card */
+.pizza-card {
+  background-color: rgba(255, 255, 255, 0.7);
+  /* border-radius: 15px; */
+  padding-left: 20px ;
+  padding-right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  flex-wrap: wrap; /* responsive fallback */
+}
+
+.pizza-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Text styling */
+.pizza-card p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  flex: 1;
+  min-width: 120px;
+}
+
+.pizza-card span[data-price] {
+  font-size: 1rem;
+  color: #222;
+  margin-right: 20px;
+  font-weight: 500;
+}
+
+/* Quantity + buttons */
+.pizza-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.pizza-actions button {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  background-color: rgba(245, 152, 60, 0.8);
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.pizza-actions button:hover {
+  background-color: rgba(245, 152, 60, 1);
+}
+
+.pizza-actions .qty {
+  font-weight: 600;
+  width: 25px;
+  text-align: center;
+}

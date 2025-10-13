@@ -1,14 +1,49 @@
 body {
-  font-family: 'Trirong', serif;
-  background-color: #fff8f4;
+  font-family: Arial, sans-serif;
   padding: 20px;
+  background: #f9f9f9;
 }
 
-.order-box {
-  background: #fff;
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.order-table th,
+.order-table td {
+  padding: 12px 15px;
   border: 1px solid #ddd;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: left;
+  vertical-align: top;
+}
+
+.order-table th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.order-table ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.thumb-img {
+  max-width: 150px;
+  max-height: 150px;
+  border: 1px solid #ccc;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.delete-order-btn{
+  background-color: rgb(235, 57, 57);
+  color: white;
+  border-radius: 20px;
 }

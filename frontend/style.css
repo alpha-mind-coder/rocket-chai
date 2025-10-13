@@ -2,29 +2,18 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    
   }
   body{
     height: 100vh;
     width: 100vw;
-    background-color:/* #ece8e0*/antiquewhite;
+    background-color:rgb(36, 36, 46);
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
-  .innerouterdiv{
-    display: flex;
-    flex-direction: column;
-     width: 100%;
-      height: 100%;
-      align-items: center; 
-    text-align: center; 
-  }
-  
-span{
-    font-family: "Trirong", serif;
-    font-weight: 900;
-    font-style: italic;
-    color: rgb(255, 113, 84);
-}
+ 
+
 .menu {
   display: flex;
   justify-content: center;
@@ -34,39 +23,43 @@ span{
 }
 
 .item-card {
-  background: rgba(255, 255, 255, 0.2);
+  /* background: rgba(255, 255, 255, 0.2); */
   border-radius: 12px;
   padding: 16px;
-  width: 180px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  width: 190px;
+  /* height: 200px; */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
    margin: 20px;
+   background-color: rgba(218, 129, 108,0.2);
 }
 
 .item-card:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(241, 113, 84, 0.6);
+  box-shadow: 0 0 20px rgba(241, 113, 84, 0.4);
+  /* transition: all 0.5s; */
 }
 
 .item-card img {
   width: 100%;
-  height: 120px;
+  height: 130px;
   object-fit: cover;
   border-radius: 8px;
 }
 
 .item-card button {
   margin-top: 10px;
-  background-color: rgb(241, 113, 84);
-  color: white;
+  background-color: rgba(218, 129, 108,0.3);
+  /* color: white; */
   border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
+  padding: 8px 15px;
+  padding-bottom: 10px;
+  border-radius: 12px;
+  margin-bottom: 10px;
   cursor: pointer;
   font-weight: bold;
-  transition: all 0.5s;
-
+  transition: all 0.4s;
   display: inline-block;
   position: relative;
 }
@@ -76,17 +69,17 @@ span{
   max-width: 220px;
 }
 @media (max-width: 577px) {
-  .item-card {
+  /* .item-card {
     flex: 1 1 100%;
     max-width: 100%;
-  }
+  } */
 
   .menu {
     justify-content: center;
   }
 }
 
-.item-btn.clicked {
+/* .item-btn.clicked {
   padding-right: 26px;
 }
 
@@ -103,20 +96,29 @@ span{
 .item-btn.clicked::after {
   opacity: 1;
   right: 10px;
-}
+} */
+ .innerouterdiv{
+    display: flex;
+    flex-direction: column;
+     width: 100vw;
+      height: 100%;
+      align-items: center; 
+    text-align: center; 
+  }
+  
  .outerdiv {
   position: relative;
-  height: 100vh;
-  width: 100vw;
-  background-image: url("./images/rocket_chai_web_image.jpg");
+  /* height: 100vh;
+  width: 100vw; */
+  /* background-image: url("./images/rocket_chai_web_image.jpg");
   background-size: cover;
   background-position: center center;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  overflow: visible;
 }
 .outerdiv::before {
   content: "";
@@ -124,23 +126,32 @@ span{
   top: 0; left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.2));
+  /* background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(0,0,0,0.2)); */
   /* z-index: 1; */
 }
 
 
 .innerdiv {
-  flex: 1;
-  width: 100%;
-  max-width: 900px;
-  padding: 20px;
+  /* flex: 1; */
+  height: 75vh;
+  width: 100vw;
+   overflow: hidden;
+ 
+  /* max-width: 900px; */
+  /* padding: 20px; */
+  background-image: url("./images/rocket_chai_poster.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
   /* background-color: rgba(0, 0, 0, 0.2); */
   /* backdrop-filter: blur(6px); */
-  border-radius: 12px;
-  overflow-y: auto;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+
+
   color: white;
-  z-index: 2;
-  padding-bottom: 10px;
+  /* z-index: 2; */
+  /* padding-bottom: 10px; */
 }
 
 .cart-summary {
@@ -164,7 +175,9 @@ span{
   justify-content: center;
   align-items: center;
   align-content: center;
-  /* padding: 20px; */
+  background-color: rgba(254, 252, 253,0.8);
+  padding-top: 40px;
+  border-radius: 12px;
   margin: 40px;
   
 }
@@ -247,4 +260,12 @@ flex-wrap: wrap;
 }
 #total-price{
   color:rgb(255, 7, 7);
+}
+
+.heading{
+   font-family: "Trirong", serif;
+    font-weight: 900;
+    font-size: larger;
+    font-style: italic;
+    /* color: rgb(255, 113, 84); */
 }

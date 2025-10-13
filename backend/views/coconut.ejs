@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>burger</title>
+   <link rel="stylesheet" href="/vegpizza.css" />
+   <link rel="stylesheet" href="/burger.css" />
+</head>
+<body>
+  <div class="fixer">
+    <div class="first">
+      <a href="<%= process.env.FRONTEND_URL || 'http://127.0.0.1:3000/' %>">🡐   </a>
+      <span>Coconut</span>
+    </div>
+   <!-- <br> -->
+    <div class="sec">
+      <a href="/pizza">Veg Pizza</a>
+      <a href="/mania">Veg Mania</a>
+      <a href="/NVpizza">Non-Veg Pizza</a>
+      <a href="/burger">Burger-Pizza</a>
+      <a href="/garlic">Garlic Bread</a>
+      <a href="/taco">Tacos</a>
+      <a href="/dessert">Desserts</a>
+    </div>
+  </div>     
+    <div class="burger-container">
+        <div class="burger-item" >
+          <div class="bur-1" data-pizza-id="15">
+                <p>Coconut</p>
+                <span data-size="Regular" data-price="30">₹ 30</span>
+                <button class="decrease" data-size="Regular">-</button>
+                <span class="qty" data-size="Regular">0</span>
+                <button class="increase" data-size="Regular">+</button>
+          </div>
+        </div>
+    </div>
+    <div class="extra"></div>
+  <!-- Sticky Cart Footer -->
+<footer id="cart-footer">
+  <div id="cart-summary"> 
+    <button id="view-cart-btn"><span id="cart-count">0</span>🛒 View Cart Details</button>
+  </div>
+</footer>
+
+<!-- Cart Panel (hidden by default) -->
+<div id="cart-panel" style="display:none;">
+  <h3>Your Cart</h3>
+  <ul id="cart-items"></ul>
+  <p>Total: ₹<span id="cart-total-panel">0</span></p>
+ <form id="order-form" action="/save-cart" method="POST">
+  <button id="place-order">Place Order</button>
+  </form>
+  <button id="close-cart">Close</button>
+</div>
+
+  <script src="/Inc_Dec.js"></script>
+</body>
+</html>
