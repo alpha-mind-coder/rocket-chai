@@ -53,7 +53,29 @@
   </form>
   <button id="close-cart">Close</button>
 </div>
+<script>
+  const cartFromServer = JSON.parse('<%- JSON.stringify(cartFromSession || {}) %>');
+  window.cart = cartFromServer || {};
 
+  document.addEventListener("DOMContentLoaded", () => {
+    // Calculate totals for footer
+    let totalItems = 0;
+    let totalPrice = 0;
+
+    for (const pid in window.cart) {
+      for (const size in window.cart[pid]) {
+        const item = window.cart[pid][size];
+        totalItems += item.quantity;
+        totalPrice += item.quantity * item.price;
+      }
+    }
+
+    updateCartFooter(totalPrice, totalItems);
+
+    // ✅ Update counts under each product card
+    updateProductCounts();
+  });
+</script>
   <script src="/Inc_Dec.js"></script>
 </body>
 </html>

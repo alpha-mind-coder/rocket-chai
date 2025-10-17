@@ -25,7 +25,7 @@
           </div>
           <div class="menu">
             <div class="item-card" data-price="120">
-              <form action="http://localhost:3000/pizza" method="get">
+              <form id="pizzaform" method="get">
               <button>
                 <img src="./images/pizzaimage.jpeg" alt="Pizza" />
                 <h3>Veg Pizzas</h3>
@@ -40,7 +40,7 @@
 
             </div>
              <div class="item-card" data-price="120">
-              <form action="http://localhost:3000/mania" method="get">
+              <form  id="maniaform" method="get">
               <button>
                 <img src="./images/pizzaimage.jpeg" alt="Pizza" />
                 <h3>Pizza Mania</h3>
@@ -55,7 +55,7 @@
 
             </div>
             <div class="item-card" data-price="120">
-               <form action="http://localhost:3000/NVpizza" method="get">
+               <form id="nvpizzaform" method="get">
               <button>
                 <img src="./images/nonveg_pizza_image.webp" alt="pizza" />
                 <h3>Non-Veg Pizzas</h3>
@@ -70,7 +70,7 @@
 
             </div>
             <div class="item-card" data-price="200">
-               <form action="http://localhost:3000/burger" method="get">
+               <form id="burgerform" method="get">
               <button>
                 <img src="./images/burger_pizza.webp" alt="burger-Pizza" />
 
@@ -85,7 +85,7 @@
                 </div> -->
             </div>
             <div class="item-card" data-price="60">
-               <form action="http://localhost:3000/coconut" method="get">
+               <form id="coconutform" method="get">
               <button>
                 <img src="./images/coconut-water.jpeg" alt="Coconut Water" />
                 <h3>Coconut Water</h3>
@@ -99,7 +99,7 @@
                 </div> -->
             </div>
            <div class="item-card" data-price="120">
-             <form action="http://localhost:3000/garlic" method="get">
+             <form id="garlicform" method="get">
             <button>
                 <img src="./images/garlic_bread.webp" alt="garlic_bread" />
                 <h3>Garlic Bread</h3>
@@ -113,7 +113,7 @@
                 </div> -->
             </div>
              <div class="item-card" data-price="120">
-               <form action="http://localhost:3000/taco" method="get">
+               <form id="tacoform" method="get">
               <button>
                 <img src="./images/taco.webp" alt="taco" />
                 <h3>Taco Mexicana</h3>
@@ -128,19 +128,13 @@
                 </div> -->
             </div>
              <div class="item-card" data-price="120">
-               <form action="http://localhost:3000/dessert" method="get">
+               <form id="dessertform" method="get">
               <button>
                 <img height="100px" src="./images/dessert.jpg" alt="desserts" />
                 <h3>Desserts</h3>
               </button>
               </form>
-                <!-- <p>₹120</p>
-                <div class="item-btn">
-                  <p>Add you items</p>
-                  <button class="dec-btn">-</button>
-                  <span class="quantity">0</span>
-                  <button class="inc-btn">+</button>
-                </div> -->
+              
             </div>
           </div>
 
@@ -164,6 +158,23 @@
     </div>
    
   </div>
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    const backendBaseURL =
+      window.location.hostname === "localhost"
+        ? "http://localhost:3000"
+        : "https://rocket-chai-backend.onrender.com";
+
+    document.getElementById("pizzaform").action = `${backendBaseURL}/pizza`;
+    document.getElementById("maniaform").action = `${backendBaseURL}/mania`;
+    document.getElementById("garlicform").action = `${backendBaseURL}/garlic`;
+    document.getElementById("nvpizzaform").action = `${backendBaseURL}/NVpizza`;
+    document.getElementById("coconutform").action = `${backendBaseURL}/coconut`;
+    document.getElementById("tacoform").action = `${backendBaseURL}/taco`;
+    document.getElementById("dessertform").action = `${backendBaseURL}/dessert`;
+    document.getElementById("burgerform").action = `${backendBaseURL}/burger`;
+  });
+</script>
   <script src="/flash.js"></script>
   <script>
   if (window.flashMessage) {

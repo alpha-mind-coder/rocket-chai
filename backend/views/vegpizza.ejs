@@ -247,12 +247,13 @@
                 <!-- <button class="customize-btn">Customize Your Order</button> -->
           </div>
       </div>
+      </div>
 
 
       <div class="pizza-card" data-pizza-id="9">
-         <h3 class="pizza-name">Margherita</h3>
+         <h3 class="pizza-name">achari_do_pyaza</h3>
         <div class="img-container">
-            <img class="oneimg" src="/images/achari_do_pyaza.jpg" alt="pizza image" />
+            <img class="oneimg" src="https://vecnarybupdndjalmlmr.supabase.co/storage/v1/object/public/backend-images/achari_do_pyaza.jpg" alt="pizza image" />
              
         </div>
               <div class="size-quantity">
@@ -277,7 +278,7 @@
           </div>
           </div>
       </div>
-    </div>
+ 
     
   </div>
   <div class="extra"></div>
@@ -294,11 +295,37 @@
   <ul id="cart-items"></ul>
   <p>Total: ₹<span id="cart-total-panel">0</span></p>
   <form id="order-form" action="/save-cart" method="POST">
-  <button id="place-order">Place Order</button>
+  <button id="place-order" type="button">Place Order</button>
   </form>
   <button id="close-cart">Close</button>
 </div>
 
-  <script src="/Inc_Dec.js"></script>
+  
+ <script>
+  const cartFromServer = JSON.parse('<%- JSON.stringify(cartFromSession || {}) %>');
+  window.cart = cartFromServer || {};
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // Calculate totals for footer
+    let totalItems = 0;
+    let totalPrice = 0;
+
+    for (const pid in window.cart) {
+      for (const size in window.cart[pid]) {
+        const item = window.cart[pid][size];
+        totalItems += item.quantity;
+        totalPrice += item.quantity * item.price;
+      }
+    }
+
+    updateCartFooter(totalPrice, totalItems);
+
+    // ✅ Update counts under each product card
+    updateProductCounts();
+  });
+</script>
+<script src="/Inc_Dec.js"></script>
+
+
 </body>
 </html>

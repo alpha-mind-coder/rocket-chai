@@ -12,16 +12,17 @@
     <div class="scanner-content">
       <a href="/" class="close-btn">✖</a>
       <h2>Please enter your details to confirm the order</h2>
+
+      <!-- Form submission uses session cart -->
       <form id="customer-form" method="POST" action="/submit-order" enctype="multipart/form-data">
-        
         <input type="text" id="name" name="name" placeholder="Name" required />
         <input type="text" id="studentid" name="student_id" placeholder="Student ID" required />
         <input type="text" id="contact" name="phone" placeholder="Contact No." required />
         <input type="email" id="email" name="email" placeholder="Email ID" required />
-        
+
         <div class="img-wrapper">
           <img class="qr-image" src="/images/qr_image.png" alt="QR Code" />
-          <h3>Your Total is : ₹ <%=total%></h3>
+          <h3>Your Total is : ₹ <%= total %></h3>
           <h3 class="upi-id">UPI ID: Q564743460@ybl</h3>
         </div>  
 
@@ -52,21 +53,40 @@
             </div>
           </div>  
         </div>
-        <input type="hidden" name="item" id="cart-data" value='<%= JSON.stringify(cart) %>'>
-        <input type="hidden" name="quantity" id="cart-qty" value="<%= quantity %>">
+
         <br />
         <button type="submit">Click to place order after payment</button>
       </form>
     </div>
   </div>
 
-  <!-- ✅ Corrected data keys: -->
-  <div id="order-data"
-       data-item='<%= JSON.stringify(cart) %>'
-       data-quantity="<%= quantity %>"
-        data-total="<%= total %>">
-  </div>
+  <script>
+    const customerForm = document.getElementById("customer-form");
 
-  <script src="/scan.js"></script>
+    customerForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(customerForm); // cart comes from session
+      try {
+        const response = await fetch("/submit-order", {
+          method: "POST",
+          body: formData,
+          credentials: "include"
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          alert("✅ Order confirmed! Cart cleared.");
+          window.location.href = "/";
+        } else {
+          alert("❌ " + (data.message || "Payment screenshot required"));
+        }
+      } catch (err) {
+        console.error(err);
+        alert("❌ Network error, please try again.");
+      }
+    });
+  </script>
 </body>
 </html>
