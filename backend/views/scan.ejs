@@ -22,7 +22,7 @@
 
         <div class="img-wrapper">
           <img class="qr-image" src="/images/qr_image.png" alt="QR Code" />
-          <h3>Your Total is : ₹ <%= total %></h3>
+          <h3 class="total" >Your Total is : ₹ <%= total %></h3>
           <h3 class="upi-id">UPI ID: Q564743460@ybl</h3>
         </div>  
 
@@ -60,33 +60,55 @@
     </div>
   </div>
 
-  <script>
-    const customerForm = document.getElementById("customer-form");
+ <script>
+  const customerForm = document.getElementById("customer-form");
+  const submitBtn = customerForm.querySelector('button[type="submit"]');
 
-    customerForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+  let isSubmitting = false;
 
-      const formData = new FormData(customerForm); // cart comes from session
-      try {
-        const response = await fetch("/submit-order", {
-          method: "POST",
-          body: formData,
-          credentials: "include"
-        });
+  customerForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-        const data = await response.json();
+    // 🔒 Prevent double submission
+    if (isSubmitting) return;
+    isSubmitting = true;
 
-        if (data.success) {
-          alert("✅ Order confirmed! Cart cleared.");
-          window.location.href = "/";
-        } else {
-          alert("❌ " + (data.message || "Payment screenshot required"));
-        }
-      } catch (err) {
-        console.error(err);
-        alert("❌ Network error, please try again.");
+    // 🕒 Disable button & show loading text
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerText = "Submitting...";
+    }
+
+    const formData = new FormData(customerForm);
+
+    try {
+      const response = await fetch("/submit-order", {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert("✅ Order confirmed! Cart cleared.");
+        window.location.href = "/";
+      } else {
+        alert("❌ " + (data.message || "Payment screenshot required"));
       }
-    });
-  </script>
+    } catch (err) {
+      console.error(err);
+      alert("❌ Network error, please try again.");
+    } finally {
+      // 🟢 Re-enable only if failed (not on success)
+      if (!data?.success && submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Submit Order";
+      }
+      isSubmitting = false;
+    }
+  });
+</script>
+
 </body>
 </html>

@@ -310,3 +310,7 @@ button:hover {
   width: 100%;
   align-items: stretch;
 }
+
+.scanner-content .total{
+  color: #ff0000;
+}
