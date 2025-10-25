@@ -273,7 +273,7 @@ flex-wrap: wrap;
 #order-message {
   position: fixed;
   height:max-content;
-  width: auto;
+  width: 80vw;
   top: 20vh;
   left: 50%;
   transform: translateX(-50%);
