@@ -21,7 +21,9 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
 };
-
+app.options(/.*/, cors(corsOptions), (req, res) => {
+  res.sendStatus(200);
+});
 // ✅ CORS for frontend
 app.use(cors(corsOptions));
 
@@ -62,9 +64,6 @@ app.use((req, res, next) => {
     res.clearCookie("connect.sid");
   }
   next();
-});
-app.options(/.*/, cors(corsOptions), (req, res) => {
-  res.sendStatus(200);
 });
 
 // ✅ Health check
