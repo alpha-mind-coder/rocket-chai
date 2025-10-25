@@ -27,18 +27,7 @@
         </div>  
 
         <div class="payment-verify">
-          <div class="upi-id-group">
-            <label for="upi-id-input">Enter your UPI ID:</label>
-            <input
-              type="text"
-              id="upi-id-input"
-              name="upi_id"
-              placeholder="X000000000@abc"
-              required
-              maxlength="20"
-              minlength="6"
-            />
-          </div>
+         
 
           <div class="screenshot-group">
             <label for="payment-screenshot">Upload Payment Screenshot:</label>
@@ -91,7 +80,7 @@
       const data = await response.json();
 
       if (data.success) {
-        alert("✅ Order confirmed!!! ");
+        alert("✅ Order confirmed!!!  Get your Domino’s on Wednesday at 5:15 PM near the cafeteria!  ");
         window.location.href = "/";
       } else {
         alert("❌ " + (data.message || "Payment screenshot required"));
