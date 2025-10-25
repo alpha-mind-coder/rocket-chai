@@ -1,110 +1,45 @@
-// let cart = {};
-// let totalPrice = 0;
-// let itemCount = 0;
+window.addEventListener("DOMContentLoaded", () => {
+  const forms = document.querySelectorAll("form[id$='form']"); // all category forms
+  const messageDiv = document.getElementById("order-message");
 
+  const now = new Date();
+  const day = now.getDay(); // 0=Sun, 1=Mon, 2=Tue, 3=Wed, ...
+  const hour = now.getHours();
 
+  // Determine if orders are allowed
+  let canOrder = false;
+  if (day === 1 || day === 2) {
+    // Monday & Tuesday - always open
+    canOrder = true;
+  } else if (day === 3 && hour === 12) {
+    // Wednesday - only at 12 noon
+    canOrder = true;
+  }
 
-// document.addEventListener("DOMContentLoaded", () => {
-//   const incButtons = document.querySelectorAll(".inc-btn");
-//   const decButtons = document.querySelectorAll(".dec-btn");
+  forms.forEach(form => {
+    const btn = form.querySelector("button");
+    if (!canOrder) {
+      btn.disabled = true;
+      btn.style.cursor = "not-allowed";
+    }
+    // form.addEventListener("submit", (e) => {
+    //   if (!canOrder) {
+    //     e.preventDefault();
+    //     if (messageDiv) {
+    //       messageDiv.textContent = "⚠️ Orders are accepted Monday & Tuesday all day, and Wednesday at 12 noon only.";
+    //       messageDiv.style.display = "block";
 
-//   incButtons.forEach(button => {
-//     button.addEventListener("click", function () {
-//       const card = this.closest(".item-card");
-//       const name = card.querySelector("h3").textContent;
-//       const price = parseInt(card.getAttribute("data-price"));
-//       const quantitySpan = card.querySelector(".quantity");
+    //       setTimeout(() => {
+    //         messageDiv.style.display = "none";
+    //       }, 4000);
+    //     }
+    //   }
+    // });
+  });
 
-//       if (!cart[name]) {
-//         cart[name] = { quantity: 1, price };
-//       } else {
-//         cart[name].quantity += 1;
-//       }
-
-//       itemCount++;
-//       totalPrice += price;
-
-//       quantitySpan.textContent = cart[name].quantity;
-
-//       updateCartDisplay();
-
-//       // animation
-//       this.classList.add("clicked");
-//       setTimeout(() => this.classList.remove("clicked"), 800);
-//     });
-//   });
-
-//   decButtons.forEach(button => {
-//     button.addEventListener("click", function () {
-//       const card = this.closest(".item-card");
-//       const name = card.querySelector("h3").textContent;
-//       const price = parseInt(card.getAttribute("data-price"));
-//       const quantitySpan = card.querySelector(".quantity");
-
-//       if (cart[name] && cart[name].quantity > 0) {
-//         cart[name].quantity -= 1;
-//         itemCount--;
-//         totalPrice -= price;
-
-//         quantitySpan.textContent = cart[name].quantity;
-
-//         if (cart[name].quantity === 0) {
-//           delete cart[name];
-//         }
-
-//         updateCartDisplay();
-
-//         this.classList.add("clicked");
-//         setTimeout(() => this.classList.remove("clicked"), 800);
-//       }
-//     });
-//   });
-
-//   const scanBtn = document.getElementById("scan-btn");
-//   if (scanBtn) {
-//     scanBtn.addEventListener("click", () => {
-//       fetch(`${backendURL}/save-cart`, {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         credentials: "include", 
-
-//        body: JSON.stringify({
-//         item: cart,          // ✅ must be 'item'
-//         quantity: itemCount  // ✅ must be 'quantity'
-//       })
-//     })
-//      .then(response => {
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! status: ${response.status}`);
-//     }
-//     return response.text(); // or text(), depending on your backend response
-//   })
-//   .then(data => {
-//     console.log("✅ /save-cart success:", data);
-//     window.location.href = `${backendURL}/scan`;
-//   })
-//     .catch(err => {
-//       console.error("Error saving cart:", err);
-//       alert("Failed to proceed. Please try again.");
-//     });
-//     });
-//   }
-// });
-
-// function updateCartDisplay() {
-//   const itemCountEl = document.getElementById("item-count");
-//   const totalPriceEl = document.getElementById("total-price");
-//   const cartListEl = document.getElementById("cart-list");
-
-//   if (itemCountEl) itemCountEl.textContent = itemCount;
-//   if (totalPriceEl) totalPriceEl.textContent = totalPrice;
-
-//   if (cartListEl) {
-//     cartListEl.innerHTML = "";
-//     for (let item in cart) {
-//       const li = document.createElement("li");
-//       li.textContent = `${item} × ${cart[item].quantity} = ₹${cart[item].quantity * cart[item].price}`;
-//       cartListEl.appendChild(li);
-//     }
-//   }
-// }
+  // Show message immediately if orders are closed
+  if (!canOrder && messageDiv) {
+    messageDiv.innerHTML = "🚨 Notice: Domino’s orders are open Monday to Wednesday (till 12 noon) only. 🥥Coconut Water available daily at 9:30PM OAT   See you then!!! ☺️ &nbsp;  Warm-regards => By Team Rocket Chai.";
+    messageDiv.style.display = "block";
+  }
+});
