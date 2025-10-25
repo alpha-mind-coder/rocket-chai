@@ -274,7 +274,7 @@ flex-wrap: wrap;
   position: fixed;
   height:max-content;
   width: 80vw;
-  top: 25vh;
+  top: 20vh;
   left: 50%;
   transform: translateX(-50%);
  background-color: rgba(242, 16, 16,0.8); /* semi-transparent red */
