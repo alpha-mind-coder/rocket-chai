@@ -63,7 +63,10 @@ app.use((req, res, next) => {
   }
   next();
 });
-app.options(/.*/, cors(corsOptions));
+app.options(/.*/, cors(corsOptions), (req, res) => {
+  res.sendStatus(200);
+});
+
 // ✅ Health check
 app.get("/healthz", (req, res) => res.send("OK"));
 
