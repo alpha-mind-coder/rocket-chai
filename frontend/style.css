@@ -269,3 +269,31 @@ flex-wrap: wrap;
     font-style: italic;
     /* color: rgb(255, 113, 84); */
 }
+
+#order-message {
+  position: fixed;
+  height:max-content;
+  width: 80vw;
+  top: 25vh;
+  left: 50%;
+  transform: translateX(-50%);
+ background-color: rgba(242, 16, 16,0.8); /* semi-transparent red */
+  color: rgb(245, 240, 240);
+  padding: 40px 15px;
+  border-radius: 15px;
+  font-weight: bold;
+  font-size: 2rem;
+  z-index: 9999;
+  display: none; /* hidden by default */
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  align-content:center;
+}
+@media (min-width: 570px) {
+  #order-message{
+    height:50vh;
+    text-align:inherit;
+    font-size: 2.5em;
+    
+  }
+}
