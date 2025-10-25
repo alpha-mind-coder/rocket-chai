@@ -143,11 +143,12 @@ function renderCartPanel() {
     });
   });
 }
+const backendBaseURL = "https://rocket-chai-backend.onrender.com";
 const placeOrderBtn = document.getElementById("place-order");
 
 placeOrderBtn?.addEventListener("click", async () => {
   try {
-    const response = await fetch("/save-cart", {
+    const response = await fetch(`${backendBaseURL}/save-cart`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
