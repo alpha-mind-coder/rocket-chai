@@ -282,7 +282,7 @@ flex-wrap: wrap;
   padding: 40px 15px;
   border-radius: 15px;
   font-weight: bold;
-  font-size: 2rem;
+  font-size: 1.5rem;
   z-index: 9999;
   display: none; /* hidden by default */
   text-align: center;
