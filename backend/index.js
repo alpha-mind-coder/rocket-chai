@@ -269,9 +269,25 @@ app.get("/login-admin", (req, res) => {
 // ✅ Admin dashboard
 app.get("/admin", async (req, res) => {
   if (!req.session.isAdmin) return res.status(403).send("Access denied");
+
   const { data, error } = await supabase.from("orders").select("*");
   if (error) return res.status(500).send("Error fetching orders");
-  res.render("admin", { orders: data });
+
+  const processedOrders = data.map((order) => {
+    let total = 0;
+    const cart = JSON.parse(order.item || "{}"); // item is stored as JSON string
+
+    for (const id in cart) {
+      for (const size in cart[id]) {
+        const item = cart[id][size];
+        total += item.price * item.quantity;
+      }
+    }
+
+    // add total as a new field
+    return { ...order, total };
+  });
+  res.render("admin", { orders: processedOrders });
 });
 
 // ✅ Delete order (admin)
