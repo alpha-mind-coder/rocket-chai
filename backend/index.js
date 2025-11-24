@@ -237,7 +237,9 @@ app.post("/submit-order", upload.single("payment_screenshot"), async (req, res) 
         screenshot_url: publicURL,
       },
     ]);
-    if (insertError) return res.status(500).json({ success: false, message: "Error saving order", details: insertError.message });
+    if (insertError){
+       console.log("🔥 SUPABASE INSERT ERROR:", insertError);
+      return res.status(500).json({ success: false, message: "Error saving order", details: insertError.message });}
 
     // Destroy session & clear cookie after order
     req.session.destroy((err) => {
