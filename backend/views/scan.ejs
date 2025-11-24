@@ -69,7 +69,7 @@
     }
 
     const formData = new FormData(customerForm);
-    let data = null; 
+    
 
     try {
       const response = await fetch("/submit-order", {
@@ -78,12 +78,12 @@
         credentials: "include",
       });
 
-       data = await response.json();
+      const data = await response.json();
 
       if (data.success) {
         alert("✅ Order confirmed!!!  Get your Domino’s on Wednesday at 5:15 PM near the cafeteria!  ");
         window.location.href = "/";
-return ;
+
       } else {
         alert("❌ " + (data.message || "Payment screenshot required"));
       }
