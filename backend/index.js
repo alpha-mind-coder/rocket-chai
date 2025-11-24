@@ -221,7 +221,7 @@ app.post("/submit-order", upload.single("payment_screenshot"), async (req, res) 
         contentType: req.file.mimetype,
         upsert: false,
       });
-    if (uploadError) return res.status(500).send("Failed to upload screenshot");
+   if (uploadError) return res.status(500).json({ success: false, message: "Failed to upload screenshot" });
 
     const { data } = supabase.storage.from("screenshots").getPublicUrl(fileName);
     const publicURL = data.publicUrl;
@@ -237,7 +237,7 @@ app.post("/submit-order", upload.single("payment_screenshot"), async (req, res) 
         screenshot_url: publicURL,
       },
     ]);
-    if (insertError) return res.status(500).send("Error saving order");
+    if (insertError) return res.status(500).json({ success: false, message: "Error saving order", details: insertError.message });
 
     // Destroy session & clear cookie after order
     req.session.destroy((err) => {
@@ -251,7 +251,7 @@ app.post("/submit-order", upload.single("payment_screenshot"), async (req, res) 
     });
   } catch (err) {
     console.error("Unexpected error:", err);
-    res.status(500).send("Server error");
+    return res.status(500).json({ success: false, message: "Server error" });
   }
 });
 
